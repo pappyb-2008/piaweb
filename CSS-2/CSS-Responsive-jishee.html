@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSS Responsive — бүх жишээ</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; background: #f4f6fb; color: #1d2433; line-height: 1.5; }
+  header.top { background: #1d2433; color: #fff; padding: 20px; text-align: center; }
+  header.top h1 { margin: 0; font-size: 1.5rem; }
+  main.wrap { max-width: 1180px; margin: 0 auto; padding: 12px 16px 40px; }
+  section.sec { background: #fff; border-radius: 14px; padding: 18px 20px; margin: 18px 0; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+  section.sec h2 { margin: 0 0 12px; font-size: 1.15rem; }
+  .controls { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; align-items: center; }
+  .controls button { border: 1px solid #cfd6e6; background: #fff; padding: 6px 10px; border-radius: 8px; cursor: pointer; font-size: .85rem; }
+  .controls button.on { background: #2f6fed; color: #fff; border-color: #2f6fed; }
+  .value { font-family: ui-monospace, Menlo, monospace; font-size: .85rem; background: #1d2433; color: #d6e2ff; padding: 6px 10px; border-radius: 8px; margin-bottom: 10px; display: inline-block; }
+  .slider { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .slider input { flex: 1; }
+  .demo { background: #eef1f8; border: 2px dashed #b8c2db; border-radius: 10px; padding: 10px; overflow-x: auto; }
+  .demo iframe { display: block; border: 2px solid #1d2433; border-radius: 10px; background: #fff; max-width: 100%; margin: 0 auto; transition: width .25s; }
+
+  #inspectbar { position: sticky; top: 0; z-index: 10; display: flex; gap: 10px; align-items: center; background: #fff; padding: 10px 16px; border-bottom: 1px solid #e3e7ef; }
+  #inspectbar button { border: 1px solid #cfd6e6; background: #fff; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: .85rem; white-space: nowrap; }
+  #inspectbar button.on { background: #2f6fed; color: #fff; border-color: #2f6fed; }
+  #tagpath { flex: 1; font-family: ui-monospace, Menlo, monospace; font-size: .85rem; background: #1d2433; color: #d6e2ff; padding: 7px 12px; border-radius: 8px; min-height: 34px; overflow-x: auto; white-space: nowrap; }
+  #tagpath b { color: #ffd43b; }
+  .demo [data-tag]:hover { outline: 3px solid #ffd43b; outline-offset: 2px; cursor: help; }
+  body.show .demo [data-tag] { position: relative; }
+  body.show .demo [data-tag]::after {
+    content: attr(data-tag); position: absolute; top: -9px; left: 6px;
+    background: #1d2433; color: #ffd43b; font: 600 11px ui-monospace, Menlo, monospace;
+    padding: 1px 6px; border-radius: 4px; white-space: nowrap; z-index: 2; pointer-events: none;
+    max-width: calc(100% - 10px); overflow: hidden; text-overflow: ellipsis;
+  }
+  body.show .demo .is-container { outline: 2px dashed #1d2433; outline-offset: 6px; margin-top: 28px; margin-bottom: 8px; }
+  body.show .demo .is-container::after { top: -30px; left: 0; background: #ffd43b; color: #1d2433; font-size: 12px; }
+
+  .split { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 14px; align-items: start; }
+  @media (max-width: 800px) { .split { grid-template-columns: minmax(0, 1fr); } }
+  .split.stack { grid-template-columns: minmax(0, 1fr); }
+  .codebox { background: #1d2433; border-radius: 10px; overflow: hidden; }
+  .codebox .cap { background: #2a3350; color: #9fb1d9; font: 600 .75rem ui-monospace, Menlo, monospace; padding: 5px 12px; letter-spacing: .04em; }
+  .codebox pre { margin: 0; padding: 12px 14px; color: #d6e2ff; font: .8rem/1.55 ui-monospace, Menlo, monospace; overflow: auto; max-height: 420px; }
+  .codebox .cap + pre + .cap { border-top: 1px solid #1d2433; }
+  .codebox pre { max-height: 480px; }
+  .codebox .t { color: #ff8fa3; } .codebox .a { color: #ffd43b; } .codebox .v { color: #8fd18f; }
+
+  .frame { max-width: 100%; border: 2px dashed #1d2433; padding: 8px; background: #fff; border-radius: 8px; }
+  .frame .fixed { width: 600px; background: #d9480f; color: #fff; font-weight: 700; padding: 12px; border-radius: 8px; margin-bottom: 8px; }
+  .frame .fluid { max-width: 600px; background: #2b9348; color: #fff; font-weight: 700; padding: 12px; border-radius: 8px; }
+</style>
+</head>
+<body>
+<header class="top"><h1>CSS Responsive · бүх жишээ</h1></header>
+<div id="inspectbar"><button id="togtag">Tag харуулах</button><div id="tagpath">Элемент дээр хулганаа аваач</div></div>
+<main class="wrap">
+
+<section class="sec">
+  <h2>1. viewport meta ба media query: картууд</h2>
+  <div class="controls" id="d1"><button data-v="320">Утас 320px</button><button data-v="600">600px</button><button data-v="800" class="on">Таблет 800px</button><button data-v="1000">Компьютер 1000px</button></div>
+  <div class="demo"><iframe id="i1" style="width:800px;height:330px" srcdoc='<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+*{box-sizing:border-box} body{margin:0;font-family:system-ui,sans-serif;padding:12px;background:#fff}
+.mode{font-weight:700;padding:6px 10px;border-radius:6px;background:#d9480f;color:#fff;margin-bottom:10px;display:inline-block}
+.mode::after{content:"Утас · 1 багана"}
+.cards{display:grid;grid-template-columns:1fr;gap:12px}
+.card{background:#2f6fed;color:#fff;padding:18px;border-radius:10px;font-weight:700;text-align:center}
+.card:nth-child(2n){background:#e8590c}.card:nth-child(3n){background:#2b9348}
+@media (min-width:768px){.mode{background:#e8590c}.mode::after{content:"Таблет · 2 багана"}.cards{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1024px){.mode{background:#2b9348}.mode::after{content:"Компьютер · 3 багана"}.cards{grid-template-columns:repeat(3,1fr)}}
+</style></head><body>
+<div class="mode"></div>
+<div class="cards"><div class="card">Карт 1</div><div class="card">Карт 2</div><div class="card">Карт 3</div><div class="card">Карт 4</div><div class="card">Карт 5</div><div class="card">Карт 6</div></div>
+</body></html>'></iframe></div>
+</section>
+
+<section class="sec">
+  <h2>2. Mobile-first: цэс босоо → хэвтээ</h2>
+  <div class="controls" id="d2"><button data-v="320" class="on">Утас 320px</button><button data-v="500">500px</button><button data-v="600">600px</button><button data-v="900">900px</button></div>
+  <div class="demo"><iframe id="i2" style="width:320px;height:230px" srcdoc='<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+*{box-sizing:border-box} body{margin:0;font-family:system-ui,sans-serif;background:#fff}
+.nav{background:#1d2433;color:#fff;padding:12px 16px;display:flex;flex-direction:column;gap:10px}
+.logo{font-weight:800;font-size:1.2rem}
+.menu{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.menu li{background:#2a3350;padding:8px 12px;border-radius:6px}
+.hint{padding:12px;color:#5b6478}
+.hint::after{content:"Утас: цэс босоо"}
+@media (min-width:600px){
+ .nav{flex-direction:row;justify-content:space-between;align-items:center}
+ .menu{flex-direction:row;gap:12px}
+ .menu li{background:none;padding:0}
+ .hint::after{content:"Өргөн: цэс хэвтээ"}}
+</style></head><body>
+<nav class="nav"><div class="logo">LOGO</div><ul class="menu"><li>Нүүр</li><li>Тухай</li><li>Холбоо</li></ul></nav>
+<div class="hint"></div>
+</body></html>'></iframe></div>
+</section>
+
+<section class="sec">
+  <h2>3. Уян өргөн: width ба max-width</h2>
+  <div class="slider"><span>Хайрцгийн өргөн:</span><input type="range" id="fw" min="200" max="760" value="500"><b id="fwn">500px</b></div>
+  <div class="demo"><div class="frame" id="frame" style="width:500px">
+    <div class="fixed">width: 600px ✗</div>
+    <div class="fluid">max-width: 600px ✓</div>
+  </div></div>
+</section>
+
+
+
+</main>
+<script>
+  function esc(x) { return x.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  var KEEP = ['class', 'name', 'content'];
+  function attrHtml(el) {
+    var h = '', cls = (el.getAttribute('class') || '').split(/\s+/).filter(function (c) { return c && c !== 'is-container'; });
+    if (!cls.length && el.id === 'page') cls = ['page'];
+    if (cls.length) h += ' <span class="a">class</span>=<span class="v">"' + esc(cls.join(' ')) + '"</span>';
+    ['name', 'content'].forEach(function (n) {
+      if (el.hasAttribute(n)) h += ' <span class="a">' + n + '</span>=<span class="v">"' + esc(el.getAttribute(n)) + '"</span>';
+    });
+    return h;
+  }
+  function openTag(el) { return '&lt;<span class="t">' + el.tagName.toLowerCase() + '</span>' + attrHtml(el) + '&gt;'; }
+  function closeTag(el) { return '&lt;/<span class="t">' + el.tagName.toLowerCase() + '</span>&gt;'; }
+  var VOID = { meta: 1, img: 1, br: 1, input: 1, link: 1 };
+  function fmt(el, depth) {
+    var pad = new Array(depth + 1).join('  '), tag = el.tagName.toLowerCase();
+    if (VOID[tag]) return pad + openTag(el);
+    if (!el.children.length) return pad + openTag(el) + esc(el.textContent.trim()) + closeTag(el);
+    var inner = Array.prototype.map.call(el.children, function (c) { return fmt(c, depth + 1); }).join('\n');
+    return pad + openTag(el) + '\n' + inner + '\n' + pad + closeTag(el);
+  }
+  function docCode(srcdoc) {
+    var d = new DOMParser().parseFromString(srcdoc, 'text/html');
+    var out = ['&lt;<span class="t">head</span>&gt;'];
+    d.querySelectorAll('head meta').forEach(function (m) { out.push(fmt(m, 1)); });
+    out.push('&lt;/<span class="t">head</span>&gt;', '&lt;<span class="t">body</span>&gt;');
+    Array.prototype.forEach.call(d.body.children, function (c) { out.push(fmt(c, 1)); });
+    out.push('&lt;/<span class="t">body</span>&gt;');
+    return out.join('\n');
+  }
+  var CSSFN = [];
+  function act(id) {
+    var b = document.querySelector('#' + id + ' button.on');
+    return b.dataset.v !== undefined ? b.dataset.v : b.textContent;
+  }
+  function cssHtml(text) {
+    return text.split('\n').map(function (line) {
+      var l = esc(line), m;
+      if ((m = l.match(/^(\s*)(.+?)\s*\{$/))) return m[1] + '<span class="t">' + m[2] + '</span> {';
+      if ((m = l.match(/^(\s*)([\w-]+):\s*(.*?)(;?)$/))) return m[1] + '<span class="a">' + m[2] + '</span>: <span class="v">' + m[3] + '</span>' + m[4];
+      if ((m = l.match(/^(\s*)(&quot;.*)$/))) return m[1] + '<span class="v">' + m[2] + '</span>';
+      return l;
+    }).join('\n');
+  }
+  function buildCode(sec, idx) {
+    var demo = sec.querySelector('.demo');
+    if (!demo) return;
+    var split = document.createElement('div');
+    split.className = 'split' + (demo.querySelector('iframe') ? ' stack' : '');
+    demo.parentNode.insertBefore(split, demo);
+    split.appendChild(demo);
+    var box = document.createElement('div');
+    box.className = 'codebox';
+    box.innerHTML = '<div class="cap">HTML</div><pre class="ph"></pre>' + (CSSFN[idx] ? '<div class="cap">CSS</div><pre class="pc"></pre>' : '');
+    split.appendChild(box);
+    sec._refreshCode = function () {
+      var ifr = demo.querySelector('iframe');
+      box.querySelector('.ph').innerHTML = ifr ? docCode(ifr.getAttribute('srcdoc')) : fmt(demo.firstElementChild, 0);
+      var pc = box.querySelector('.pc');
+      if (pc && CSSFN[idx]) pc.innerHTML = cssHtml(CSSFN[idx]());
+    };
+    sec._refreshCode();
+  }
+  ['click', 'input'].forEach(function (ev) {
+    document.addEventListener(ev, function () {
+      document.querySelectorAll('section.sec').forEach(function (sec) { if (sec._refreshCode) sec._refreshCode(); });
+    });
+  });
+  function tagOf(el) {
+    var t = '<' + el.tagName.toLowerCase(), cls = (el.getAttribute('class') || '').split(/\s+/).filter(function (c) { return c && c !== 'is-container'; });
+    if (cls.length) t += ' class="' + cls.join(' ') + '"'; else if (el.id === 'page') t += ' class="page"';
+    return t + '>';
+  }
+  function setupInspector() {
+    document.querySelectorAll('.demo *').forEach(function (el) {
+      el.setAttribute('data-tag', tagOf(el));
+      if (el.children.length) el.classList.add('is-container');
+    });
+    var tagpath = document.getElementById('tagpath');
+    document.querySelectorAll('.demo').forEach(function (demo) {
+      demo.addEventListener('mouseover', function (e) {
+        var el = e.target.closest('[data-tag]');
+        if (!el) return;
+        var parts = [], cur = el;
+        while (cur && cur !== demo) { if (cur.dataset.tag) parts.unshift(cur.dataset.tag); cur = cur.parentElement; }
+        var last = parts.pop();
+        tagpath.innerHTML = (parts.length ? parts.map(esc).join(' › ') + ' › ' : '') + '<b>' + esc(last) + '</b>';
+      });
+      demo.addEventListener('mouseleave', function () { tagpath.textContent = 'Элемент дээр хулганаа аваач'; });
+    });
+    var tog = document.getElementById('togtag');
+    tog.addEventListener('click', function () {
+      var on = document.body.classList.toggle('show');
+      tog.classList.toggle('on', on);
+      tog.textContent = on ? 'Tag нуух' : 'Tag харуулах';
+    });
+  }
+  function bindButtons(ctlId, onPick) {
+    var ctl = document.getElementById(ctlId);
+    ctl.addEventListener('click', function (e) {
+      if (e.target.tagName !== 'BUTTON') return;
+      ctl.querySelectorAll('button').forEach(function (b) { b.classList.remove('on'); });
+      e.target.classList.add('on');
+      onPick(e.target.dataset.v !== undefined ? e.target.dataset.v : e.target.textContent, e.target);
+    });
+    var on = ctl.querySelector('button.on');
+    onPick(on.dataset.v !== undefined ? on.dataset.v : on.textContent, on);
+  }
+
+
+  CSSFN[0] = function () { return '.cards {\n  display: grid;\n  grid-template-columns: 1fr;\n  gap: 12px;\n}\n\n@media (min-width: 768px) {\n  .cards {\n    grid-template-columns: repeat(2, 1fr);\n  }\n}\n\n@media (min-width: 1024px) {\n  .cards {\n    grid-template-columns: repeat(3, 1fr);\n  }\n}'; };
+  CSSFN[1] = function () { return '.nav {\n  display: flex;\n  flex-direction: column;\n  gap: 10px;\n}\n.menu {\n  display: flex;\n  flex-direction: column;\n  gap: 6px;\n}\n\n@media (min-width: 600px) {\n  .nav {\n    flex-direction: row;\n    justify-content: space-between;\n    align-items: center;\n  }\n  .menu {\n    flex-direction: row;\n    gap: 12px;\n  }\n}'; };
+  CSSFN[2] = function () { return '.fixed {\n  width: 600px;\n}\n.fluid {\n  max-width: 600px;\n}'; };
+  function setupDev(ctl, ifr) {
+    bindButtons(ctl, function (v) { document.getElementById(ifr).style.width = v + 'px'; });
+  }
+  setupDev('d1', 'i1');
+  setupDev('d2', 'i2');
+
+  var fw = document.getElementById('fw');
+  fw.addEventListener('input', function () {
+    document.getElementById('frame').style.width = fw.value + 'px';
+    document.getElementById('fwn').textContent = fw.value + 'px';
+  });
+
+
+  document.querySelectorAll('section.sec').forEach(function (sec, i) { buildCode(sec, i); });
+  setupInspector();
+</script>
+</body>
+</html>

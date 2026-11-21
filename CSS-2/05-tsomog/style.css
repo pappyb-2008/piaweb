@@ -1,0 +1,99 @@
+/* === Reset === */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* === Хуудасны layout: Grid areas === */
+body {
+  display: grid;
+  grid-template-areas:
+    "header"
+    "main"
+    "footer";
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f6fb;
+}
+
+.site-header {
+  grid-area: header;
+  padding: 20px 24px;
+  color: #ffffff;
+  background: #1d3557;
+}
+
+.site-header h1 {
+  margin: 0;
+}
+
+.site-footer {
+  grid-area: footer;
+  padding: 16px 24px;
+  text-align: center;
+  color: #e0e1dd;
+  background: #0d1b2a;
+}
+
+/* === Цомог: media query-гүй өөрөө зохицох сүлжээ === */
+.gallery {
+  grid-area: main;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  padding: 24px;
+}
+
+/* === Зураг ба figure === */
+.gallery__item {
+  margin: 0;
+  overflow: hidden;
+  background: #ffffff;
+  border-radius: 12px;
+}
+
+.gallery__item img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.gallery__item:hover img {
+  transform: scale(1.05);
+}
+
+.gallery__item figcaption {
+  padding: 10px 14px;
+}
+
+/* === Онцлох зураг: 2 багана, 2 мөр === */
+.gallery__item--featured {
+  grid-column: span 2;
+  grid-row: span 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.gallery__item--featured img {
+  flex: 1;
+  min-height: 0;
+  aspect-ratio: auto;
+}
+
+/* Нарийн дэлгэц: span 2 нь шинэ багана үүсгэхээс сэргийлнэ */
+@media (max-width: 520px) {
+  .gallery__item--featured {
+    grid-column: auto;
+    grid-row: auto;
+    display: block;
+  }
+
+  .gallery__item--featured img {
+    aspect-ratio: 4 / 3;
+  }
+}

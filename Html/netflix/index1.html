@@ -1,0 +1,29 @@
+<html>
+   <head>
+        <link rel="stylesheet" href="to-do-list.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>todo</title>
+
+<main class="app">
+    <style>
+        .done {
+            text-decoration: line-through;
+        }
+    </style>
+
+    <body>
+        <form class="header">
+            <strong>Миний ажлууд</strong>
+            <label for="calendar">Select a date:</label>
+            <input type="date" id="calendar"></input>
+        </form>
+        <form id="form">
+            <input id="input" placeholder="Шинэ ажил..." required>
+            <button>Нэмэх</button>
+        </form>
+        <ul id="list"></ul>
+</main>
+<script src="todo.js"></script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+/* === Reset ба суурь === */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: #1b263b;
+}
+
+a {
+  color: inherit;
+}
+
+/* === Толгой хэсэг: лого зүүн, цэс баруун === */
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 32px;
+  background: #1b263b;
+  color: #ffffff;
+}
+
+.logo {
+  font-size: 1.4rem;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+/* === Цэс: хэвтээ эгнээ === */
+.nav-list {
+  display: flex;
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav-list a {
+  text-decoration: none;
+}
+
+.nav-list a:hover {
+  text-decoration: underline;
+}
+
+/* === Hero: босоо багана, яг төвд === */
+.hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  padding: 40px 20px;
+  text-align: center;
+  color: #ffffff;
+  background: #415a77;
+}
+
+.hero h1 {
+  margin: 0 0 8px;
+  font-size: 2.75rem;
+}
+
+/* === Товч === */
+.btn {
+  display: inline-block;
+  padding: 10px 22px;
+  text-decoration: none;
+  color: #ffffff;
+  background: #e07a00;
+  border-radius: 8px;
+}
+
+.btn:hover {
+  background: #c46a00;
+}
+
+/* === Картууд: 3 тэнцүү, дэлгэц нарийсахад доош шилжинэ === */
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 20px;
+}
+
+.feature {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 250px;
+  padding: 24px;
+  background: #f1f4f9;
+  border-radius: 12px;
+}
+
+.feature h2 {
+  margin-top: 0;
+}
+
+/* Товч картын хамгийн доод хэсэгт: margin-top: auto */
+.feature .btn {
+  align-self: flex-start;
+  margin-top: auto;
+}
+
+/* === Footer: 3 тэнцүү багана === */
+.site-footer {
+  display: flex;
+  gap: 24px;
+  padding: 32px;
+  color: #e0e1dd;
+  background: #0d1b2a;
+}
+
+.footer-col {
+  flex: 1;
+}
+
+.footer-col h3 {
+  margin-top: 0;
+}

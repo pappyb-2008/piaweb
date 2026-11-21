@@ -1,0 +1,26 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    grid-row: 1;
+    color: rgb(78, 56, 222); 
+    text-align: center;
+    margin: 10px;
+    gap: 10px;
+}
+.header strong {
+    font-size: 2rem;
+}
+
+
+
+
+
+    
+    
+          

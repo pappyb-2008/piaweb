@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSS Grid — бүх шинж чанар (жишээ)</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; background: #f4f6fb; color: #1d2433; line-height: 1.5; }
+  header { background: #1d2433; color: #fff; padding: 20px; text-align: center; }
+  header h1 { margin: 0; font-size: 1.5rem; }
+  main { max-width: 1180px; margin: 0 auto; padding: 12px 16px 40px; }
+  section { background: #fff; border-radius: 14px; padding: 18px 20px; margin: 18px 0; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+  h2 { margin: 0 0 12px; font-size: 1.15rem; }
+  .controls { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+  .controls button { border: 1px solid #cfd6e6; background: #fff; padding: 6px 10px; border-radius: 8px; cursor: pointer; font-size: .85rem; }
+  .controls button.on { background: #2f6fed; color: #fff; border-color: #2f6fed; }
+  .value { font-family: ui-monospace, Menlo, monospace; font-size: .85rem; background: #1d2433; color: #d6e2ff; padding: 6px 10px; border-radius: 8px; margin-bottom: 10px; display: inline-block; }
+  .demo { background: #eef1f8; border: 2px dashed #b8c2db; border-radius: 10px; padding: 10px; overflow-x: auto; }
+  .grid > div { background: #2f6fed; color: #fff; font-weight: 700; text-align: center; padding: 14px 8px; border-radius: 8px; }
+  .grid > div:nth-child(3n+2) { background: #e8590c; }
+  .grid > div:nth-child(3n) { background: #2b9348; }
+  .slider { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .slider input { flex: 1; }
+  #page { display: grid; grid-template-columns: 120px 1fr; grid-template-rows: auto 120px auto; grid-template-areas: "header header" "sidebar main" "footer footer"; gap: 8px; }
+  #page > div { color: #fff; font-weight: 700; text-align: center; padding: 12px; border-radius: 8px; }
+  .a-header { grid-area: header; background: #2f6fed; }
+  .a-sidebar { grid-area: sidebar; background: #e8590c; }
+  .a-main { grid-area: main; background: #2b9348; }
+  .a-footer { grid-area: footer; background: #7048e8; }
+  @media (max-width: 560px) {
+    #page { grid-template-columns: 1fr; grid-template-rows: auto; grid-template-areas: "header" "sidebar" "main" "footer"; }
+  }
+
+  /* HTML элемент харуулах */
+  #inspectbar { position: sticky; top: 0; z-index: 10; display: flex; gap: 10px; align-items: center; background: #fff; padding: 10px 16px; border-bottom: 1px solid #e3e7ef; }
+  #inspectbar button { border: 1px solid #cfd6e6; background: #fff; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: .85rem; white-space: nowrap; }
+  #inspectbar button.on { background: #2f6fed; color: #fff; border-color: #2f6fed; }
+  #tagpath { flex: 1; font-family: ui-monospace, Menlo, monospace; font-size: .85rem; background: #1d2433; color: #d6e2ff; padding: 7px 12px; border-radius: 8px; min-height: 34px; overflow-x: auto; white-space: nowrap; }
+  #tagpath b { color: #ffd43b; }
+  .demo [data-tag]:hover { outline: 3px solid #ffd43b; outline-offset: 2px; cursor: help; }
+  body.show .demo [data-tag] { position: relative; }
+  body.show .demo [data-tag]::after {
+    content: attr(data-tag);
+    position: absolute; top: -9px; left: 6px;
+    background: #1d2433; color: #ffd43b;
+    font: 600 11px ui-monospace, Menlo, monospace;
+    padding: 1px 6px; border-radius: 4px; white-space: nowrap; z-index: 2; pointer-events: none; max-width: calc(100% - 10px); overflow: hidden; text-overflow: ellipsis;
+  }
+  body.show .demo .is-container { outline: 2px dashed #1d2433; outline-offset: 6px; margin-top: 28px; margin-bottom: 8px; }
+  body.show .demo .is-container::after { top: -30px; left: 0; background: #ffd43b; color: #1d2433; font-size: 12px; }
+
+  /* demo (зүүн) + HTML код (баруун) */
+  .split { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 14px; align-items: start; }
+  @media (max-width: 800px) { .split { grid-template-columns: minmax(0, 1fr); } }
+  .codebox { background: #1d2433; border-radius: 10px; overflow: hidden; }
+  .codebox .cap { background: #2a3350; color: #9fb1d9; font: 600 .75rem ui-monospace, Menlo, monospace; padding: 5px 12px; letter-spacing: .04em; }
+  .codebox pre { margin: 0; padding: 12px 14px; color: #d6e2ff; font: .8rem/1.55 ui-monospace, Menlo, monospace; overflow: auto; max-height: 420px; }
+  .codebox .cap + pre + .cap { border-top: 1px solid #1d2433; }
+  .codebox pre { max-height: 480px; }
+  .codebox .t { color: #ff8fa3; } .codebox .a { color: #ffd43b; } .codebox .v { color: #8fd18f; }
+</style>
+</head>
+<body>
+
+<header><h1>CSS Grid · бүх шинж чанар</h1></header>
+
+<div id="inspectbar">
+  <button id="togtag">Tag харуулах</button>
+  <div id="tagpath">Элемент дээр хулганаа аваач</div>
+</div>
+
+<main>
+
+<section>
+  <h2>1. grid-template-columns</h2>
+  <div class="controls" id="colctl">
+    <button class="on" data-v="repeat(3, 1fr)">repeat(3, 1fr)</button>
+    <button data-v="1fr 1fr 1fr">1fr 1fr 1fr</button>
+    <button data-v="1fr 2fr 1fr">1fr 2fr 1fr</button>
+    <button data-v="200px 1fr 1fr">200px 1fr 1fr</button>
+    <button data-v="repeat(2, 1fr)">repeat(2, 1fr)</button>
+    <button data-v="repeat(6, 1fr)">repeat(6, 1fr)</button>
+  </div>
+  <div class="value" id="colval"></div>
+  <div class="demo"><div class="grid" id="g1" style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px;">
+    <div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div>
+  </div></div>
+</section>
+
+<section>
+  <h2>2. grid-template-rows</h2>
+  <div class="controls" id="rowctl">
+    <button class="on" data-v="auto">auto</button>
+    <button data-v="60px 120px">60px 120px</button>
+    <button data-v="100px 100px">100px 100px</button>
+    <button data-v="1fr 3fr">1fr 3fr</button>
+  </div>
+  <div class="value" id="rowval"></div>
+  <div class="demo"><div class="grid" id="g2" style="display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:auto; height:260px; gap:10px;">
+    <div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div>
+  </div></div>
+</section>
+
+<section>
+  <h2>3. gap</h2>
+  <div class="slider"><span>gap:</span><input type="range" id="gapslider" min="0" max="50" value="10"><b id="gapnum">10px</b></div>
+  <div class="slider"><span>Мөр:</span><input type="range" id="rowgap" min="0" max="50" value="10"><b id="rowgapnum">10px</b></div>
+  <div class="slider"><span>Багана:</span><input type="range" id="colgap" min="0" max="50" value="10"><b id="colgapnum">10px</b></div>
+  <div class="value" id="gapval"></div>
+  <div class="demo"><div class="grid" id="g3" style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px;">
+    <div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div>
+  </div></div>
+</section>
+
+<section>
+  <h2>4. Нүд сунгах: grid-column, grid-row</h2>
+  <div class="controls" id="spanctl">
+    <button class="on" data-v="none">Сунгахгүй</button>
+    <button data-v="col">1-р нүд 2 баганаар</button>
+    <button data-v="row">1-р нүд 2 мөрөөр</button>
+    <button data-v="both">2 баганаар ба 2 мөрөөр</button>
+  </div>
+  <div class="value" id="spanval"></div>
+  <div class="demo"><div class="grid" id="g4" style="display:grid; grid-template-columns:repeat(4,1fr); grid-auto-rows:60px; gap:10px;">
+    <div id="g4first">1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div><div>8</div>
+  </div></div>
+</section>
+
+<section>
+  <h2>5. grid-template-areas: хуудасны layout</h2>
+  <div class="demo"><div id="page">
+    <div class="a-header">header</div><div class="a-sidebar">sidebar</div>
+    <div class="a-main">main</div><div class="a-footer">footer</div>
+  </div></div>
+</section>
+
+<section>
+  <h2>6. auto-fit + minmax: цонхоо жижигсгээд хар</h2>
+  <div class="value">repeat(auto-fit, minmax(120px, 1fr))</div>
+  <div class="demo"><div class="grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(120px, 1fr)); gap:10px;">
+    <div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div><div>8</div>
+  </div></div>
+</section>
+
+</main>
+
+<script>
+  function bindButtons(ctlId, onPick) {
+    var ctl = document.getElementById(ctlId);
+    ctl.addEventListener('click', function (e) {
+      if (e.target.tagName !== 'BUTTON') return;
+      ctl.querySelectorAll('button').forEach(function (b) { b.classList.remove('on'); });
+      e.target.classList.add('on');
+      onPick(e.target.dataset.v);
+    });
+    onPick(ctl.querySelector('button.on').dataset.v);
+  }
+
+  bindButtons('colctl', function (v) {
+    document.getElementById('g1').style.gridTemplateColumns = v;
+    document.getElementById('colval').textContent = 'grid-template-columns: ' + v + ';';
+  });
+
+  bindButtons('rowctl', function (v) {
+    document.getElementById('g2').style.gridTemplateRows = v;
+    document.getElementById('rowval').textContent = 'grid-template-rows: ' + v + ';';
+  });
+
+  var g3 = document.getElementById('g3');
+  function setGap(which) {
+    var all = document.getElementById('gapslider'), r = document.getElementById('rowgap'), c = document.getElementById('colgap');
+    if (which === 'all') { r.value = all.value; c.value = all.value; }
+    g3.style.rowGap = r.value + 'px';
+    g3.style.columnGap = c.value + 'px';
+    document.getElementById('gapnum').textContent = all.value + 'px';
+    document.getElementById('rowgapnum').textContent = r.value + 'px';
+    document.getElementById('colgapnum').textContent = c.value + 'px';
+    document.getElementById('gapval').textContent =
+      (r.value === c.value) ? 'gap: ' + r.value + 'px;' : 'gap: ' + r.value + 'px ' + c.value + 'px;';
+  }
+  document.getElementById('gapslider').addEventListener('input', function () { setGap('all'); });
+  document.getElementById('rowgap').addEventListener('input', function () { setGap('row'); });
+  document.getElementById('colgap').addEventListener('input', function () { setGap('col'); });
+  setGap('all');
+
+  bindButtons('spanctl', function (v) {
+    var f = document.getElementById('g4first');
+    var map = {
+      none: ['auto', 'auto', 'Сунгахгүй'],
+      col: ['span 2', 'auto', 'grid-column: span 2;'],
+      row: ['auto', 'span 2', 'grid-row: span 2;'],
+      both: ['span 2', 'span 2', 'grid-column: span 2;  grid-row: span 2;']
+    };
+    f.style.gridColumn = map[v][0];
+    f.style.gridRow = map[v][1];
+    document.getElementById('spanval').textContent = map[v][2];
+  });
+
+
+  // Баруун талд тухайн хэсгийн HTML кодыг гаргана
+  function classesOf(el) {
+    var cls = (el.getAttribute('class') || '').split(/\s+/).filter(Boolean);
+    if (!cls.length && el.id === 'page') cls = ['page'];
+    return cls;
+  }
+  function openTag(el) {
+    var cls = classesOf(el);
+    var h = '&lt;<span class="t">' + el.tagName.toLowerCase() + '</span>';
+    if (cls.length) h += ' <span class="a">class</span>=<span class="v">"' + cls.join(' ') + '"</span>';
+    return h + '&gt;';
+  }
+  function closeTag(el) {
+    return '&lt;/<span class="t">' + el.tagName.toLowerCase() + '</span>&gt;';
+  }
+  function fmt(el, depth) {
+    var pad = new Array(depth + 1).join('  ');
+    if (!el.children.length) return pad + openTag(el) + esc(el.textContent.trim()) + closeTag(el);
+    var inner = Array.prototype.map.call(el.children, function (c) { return fmt(c, depth + 1); }).join('\n');
+    return pad + openTag(el) + '\n' + inner + '\n' + pad + closeTag(el);
+  }
+  var CSSFN = [];
+  function act(id) {
+    var b = document.querySelector('#' + id + ' button.on');
+    return b.dataset.v !== undefined ? b.dataset.v : b.textContent;
+  }
+  function cssHtml(text) {
+    return text.split('\n').map(function (line) {
+      var l = esc(line), m;
+      if ((m = l.match(/^(\s*)(.+?)\s*\{$/))) return m[1] + '<span class="t">' + m[2] + '</span> {';
+      if ((m = l.match(/^(\s*)([\w-]+):\s*(.*?)(;?)$/))) return m[1] + '<span class="a">' + m[2] + '</span>: <span class="v">' + m[3] + '</span>' + m[4];
+      if ((m = l.match(/^(\s*)(&quot;.*)$/))) return m[1] + '<span class="v">' + m[2] + '</span>';
+      return l;
+    }).join('\n');
+  }
+  function gapVal() {
+    var r = document.getElementById('rowgap').value, c = document.getElementById('colgap').value;
+    return r === c ? r + 'px' : r + 'px ' + c + 'px';
+  }
+  CSSFN[0] = function () { return '.grid {\n  display: grid;\n  grid-template-columns: ' + act('colctl') + ';\n  gap: 10px;\n}'; };
+  CSSFN[1] = function () { return '.grid {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  grid-template-rows: ' + act('rowctl') + ';\n  height: 260px;\n  gap: 10px;\n}'; };
+  CSSFN[2] = function () { return '.grid {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  gap: ' + gapVal() + ';\n}'; };
+  CSSFN[3] = function () {
+    var v = act('spanctl'), extra = '';
+    if (v === 'col') extra = '\n.grid > div:first-child {\n  grid-column: span 2;\n}';
+    if (v === 'row') extra = '\n.grid > div:first-child {\n  grid-row: span 2;\n}';
+    if (v === 'both') extra = '\n.grid > div:first-child {\n  grid-column: span 2;\n  grid-row: span 2;\n}';
+    return '.grid {\n  display: grid;\n  grid-template-columns: repeat(4, 1fr);\n  grid-auto-rows: 60px;\n  gap: 10px;\n}' + extra;
+  };
+  CSSFN[4] = function () { return '.page {\n  display: grid;\n  grid-template-columns: 120px 1fr;\n  grid-template-rows: auto 110px auto;\n  grid-template-areas:\n    "header header"\n    "sidebar main"\n    "footer footer";\n  gap: 8px;\n}\n.a-header {\n  grid-area: header;\n}\n.a-sidebar {\n  grid-area: sidebar;\n}\n.a-main {\n  grid-area: main;\n}\n.a-footer {\n  grid-area: footer;\n}'; };
+  CSSFN[5] = function () { return '.grid {\n  display: grid;\n  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));\n  gap: 10px;\n}'; };
+
+  document.querySelectorAll('section').forEach(function (sec, idx) {
+    var demo = sec.querySelector('.demo');
+    if (!demo) return;
+    var split = document.createElement('div');
+    split.className = 'split';
+    demo.parentNode.insertBefore(split, demo);
+    split.appendChild(demo);
+    var box = document.createElement('div');
+    box.className = 'codebox';
+    box.innerHTML = '<div class="cap">HTML</div><pre class="ph">' + fmt(demo.firstElementChild, 0) + '</pre>' +
+      (CSSFN[idx] ? '<div class="cap">CSS</div><pre class="pc"></pre>' : '');
+    split.appendChild(box);
+    sec._refreshCss = function () {
+      var pc = box.querySelector('.pc');
+      if (pc && CSSFN[idx]) pc.innerHTML = cssHtml(CSSFN[idx]());
+    };
+    sec._refreshCss();
+  });
+  ['click', 'input'].forEach(function (ev) {
+    document.addEventListener(ev, function () {
+      document.querySelectorAll('section').forEach(function (sec) { if (sec._refreshCss) sec._refreshCss(); });
+    });
+  });
+
+  // HTML элементүүдийн tag нэрийг автоматаар олгоно
+  function tagOf(el) {
+    var t = '<' + el.tagName.toLowerCase();
+    var cls = (el.getAttribute('class') || '').split(/\s+/).filter(function (c) { return c && c !== 'is-container'; });
+    if (cls.length) t += ' class="' + cls.join(' ') + '"';
+    else if (el.id && /^(page)$/.test(el.id)) t += ' class="page"';
+    return t + '>';
+  }
+  function esc(x) { return x.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  document.querySelectorAll('.demo *').forEach(function (el) {
+    el.setAttribute('data-tag', tagOf(el));
+    if (el.children.length) el.classList.add('is-container');
+  });
+  var tagpath = document.getElementById('tagpath');
+  document.querySelectorAll('.demo').forEach(function (demo) {
+    demo.addEventListener('mouseover', function (e) {
+      var el = e.target.closest('[data-tag]');
+      if (!el) return;
+      var parts = [], cur = el;
+      while (cur && cur !== demo) { if (cur.dataset.tag) parts.unshift(cur.dataset.tag); cur = cur.parentElement; }
+      var last = parts.pop();
+      tagpath.innerHTML = (parts.length ? parts.map(esc).join(' › ') + ' › ' : '') + '<b>' + esc(last) + '</b>';
+    });
+    demo.addEventListener('mouseleave', function () { tagpath.textContent = 'Элемент дээр хулганаа аваач'; });
+  });
+  var togtag = document.getElementById('togtag');
+  togtag.addEventListener('click', function () {
+    var on = document.body.classList.toggle('show');
+    togtag.classList.toggle('on', on);
+    togtag.textContent = on ? 'Tag нуух' : 'Tag харуулах';
+  });
+</script>
+</body>
+</html>
