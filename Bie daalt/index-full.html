@@ -1,274 +1,265 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>LAVÉLLE | Timeless Fashion</title>
-<script src="https://cdn.tailwindcss.com"></script>
+    <title>LAVÉLLE | Timeless Fashion</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 
-<style>
-body {
-font-family: 'Inter', sans-serif;
-background-color: #FAF7F2;
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #E8DCCB;
 
-}
-.header {
-    background: linear-gradient(to right ,rgb(219, 155, 37) , rgb(72, 42, 1));
-}
+        }
 
-h1, h2, h3 {
-font-family: 'Playfair Display', serif;
-}
-image {
-    w-full h-[280px] object-contain p-4 bg-[#F8F5F0]
-}
-</style> 
+        .header {
+            background: linear-gradient(to right, rgb(219, 155, 37), rgb(72, 42, 1));
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Playfair Display', serif;
+        }
+    </style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
-<header class=" header px-6 md:px-12 py-5">
+    <!-- NAVBAR -->
+    <header class=" header px-6 md:px-12 py-5">
 
-<nav class="flex items-center justify-between">
+        <nav class="flex items-center justify-between">
 
-<a href="#" class="text-2xl tracking-[0.2em] font-medium">
-LAVÉLLE
-</a>
+            <a href="#" class="text-2xl tracking-[0.2em] font-medium">
+                LAVÉLLE
+            </a>
 
-<div class="hidden md:flex gap-8 text-sm">
-<a href="#">Home</a>
-<a href="#shop">Shop</a>
-<a href="#collections">Collections</a>
-<a href="#about">About</a>
-</div>
+            <div class="hidden md:flex gap-1 text-sm">
+               <div class="border-2 p-2 rounded-lg border-slate-950 shadow-lg hover:bg-slate-950 hover:text-white"> <a href="#" id="home" >Home</a></div>
+                <div  class="border-2 p-2 rounded-lg border-slate-950 shadow-lg hover:bg-slate-950  hover:text-white"><a href="#shop" id="shop">Shop</a></div>
+               <div  class="border-2 p-2 rounded-lg border-slate-950 shadow-lg hover:bg-slate-950  hover:text-white"> <a href="#collections" id="collection">Collections</a></div>
+               <div  class="border-2 p-2 rounded-lg border-slate-950 shadow-lg hover:bg-slate-950  hover:text-white"><a href="#about" id="about">About</a></div>
+            </div>
 
-<button class="text-sm">
-BAG (0)
-</button>
+            <button id="bag" class="text-sm">
+                BAG (0)
+            </button>
 
-</nav>
+        </nav>
 
-</header>
+    </header>
 
 
-<!-- HERO SECTION -->
-<section class="relative h-[550px] md:h-[650px] ">
+    <!-- HERO SECTION -->
+    <section id="section-1" class="relative h-[550px] md:h-[650px] ">
+
+        <img src="Vintage View.jpg" class="absolute inset-0 w-full h-full object-cover"
+            alt="LAVÉLLE fashion collection">
+        <div class="absolute inset-0 bg-black/30"></div>
 
-<img src="Vintage View.jpg"
-class="absolute inset-0 w-full h-full object-cover"
-alt="LAVÉLLE fashion collection"
->
-<div class="absolute inset-0 bg-black/30"></div>
+        <div class="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-5">
 
-<div class="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-5">
+            <p class="text-xs tracking-[0.50em] text-font:bold mb-5 text-size-8px text-amber-400">
+                THE NEW COLLECTION
+            </p>
 
-<p class="text-xs tracking-[0.50em] text-font:bold mb-5 text-size-8px text-amber-400">
-THE NEW COLLECTION
-</p>
+            <h1 class="text-5xl md:text-7xl mb-6 font-bold">
+                Elegance, Every Day.
+            </h1>
 
-<h1 class="text-5xl md:text-7xl mb-6 font-bold">
-Elegance, Every Day.
-</h1>
+            <p class="text-sm md:text-base mb-8">
+                Discover your timeless style.
+            </p>
 
-<p class="text-sm md:text-base mb-8">
-Discover your timeless style.
-</p>
+            <button id="button" href="#shop"
+                class="bg-yellow-800 rounded-full text-slate-950 px-9 py-4 text-xs tracking-widest hover:bg-yellow-700 transition-duration:300 ease-in-out ...">
+                show me
+            </button>
 
-<button href="#shop"
-class="bg-yellow-800 rounded-full text-slate-950 px-9 py-4 text-xs tracking-widest hover:bg-yellow-700 transition transition-delay-150 duration-300 ease-in-out ...">show me
-</button>
+        </div>
 
-</div>
+    </section>
 
-</section>
 
+    <!-- NEW ARRIVALS -->
+    <section id="shop" class="px-6 md:px-12 py-20">
 
-<!-- NEW ARRIVALS -->
-<section id="shop" class="px-6 md:px-12 py-20">
+        <div class="text-center mb-12">
 
-<div class="text-center mb-12">
+            <p class="text-xs tracking-[0.4em] text-yellow-600  mb-3">
+                JUST ARRIVED
+            </p>
 
-<p class="text-xs tracking-[0.4em] text-yellow-600  mb-3">
-JUST ARRIVED
-</p>
+            <h2 class="text-5xl text-[#403832]">
+                New Arrivals
+            </h2>
 
-<h2 class="text-5xl text-[#403832]">
-New Arrivals
-</h2>
+            <p class="text-sm text-gray-500 mt-3">
+                Pieces you'll love, season after season.
+            </p>
 
-<p class="text-sm text-gray-500 mt-3">
-Pieces you'll love, season after season.
-</p>
+        </div>
 
-</div>
 
+        <div id="proddcut-1" class="grid grid-cols-2 lg:grid-cols-4 gap-5 ">
 
-<div class="grid grid-cols-2 lg:grid-cols-4 gap-5">
+            <!-- PRODUCT 1 -->
+            <div class="border-2  rounded-lg shadow-2xl oveflow-hidden border-orange-200 bg-[#F5EFE6] ">
+                <div class="w-full aspect-[3/4] overflow-hidden"><img src="old money fashion.jpg"
+                        class="w-full h-full rounded-t-lg object-cover" alt="Classic outfit">
+                </div>
+                <div class="h-[20%]">
+                    <h3 class="text-lg text-center mt-4 ml-4">Classic shirt</h3>
+                   
+        <button class="bg-[#C99F91] rounded-lg mx-40 mb-8 px-5 py-2 text-center hover:bg-yellow-500">89,000₮</button>
+                </div>
+            </div>
 
-<!-- PRODUCT 1 -->
-<div class="image">
-<img
-src="download (4).jpg" class="w-full aspect-[4/5] objet-contain p-3 bg-[#F8F5F0]"
-alt="Classic outfit"
->
 
-<h3 class="text-lg mt-4 ml-4">Classic shirt</h3>
-<p class="text-sm text-gray-700 mt-4 pl-3">89,000₮</p>
-<!-- <button class="absuolute ">Bag</button> --> 
-</div>
+            <!-- PRODUCT 2 -->
+             <div class="border-2 rounded-lg  shadow-2xl oveflow-hidden border-orange-200 bg-[#F5EFE6] ">
+                <div class="w-full aspect-[3/4] overflow-hidden"><img src="download (4).jpg"
+                        class="w-full h-full rounded-t-lg object-cover" alt="Classic outfit">
+                </div>
+                <div class="h-[20%]">
+                    <h3 class="text-lg mt-4 ml-4">Classic shirt</h3>
+                    <p class="text-sm text-gray-900 mt-4 pl-3">89,000₮</p>
+                    <!-- <button class="absuolute ">Bag</button> -->
+                </div>
+            </div>
 
 
-<!-- PRODUCT 2 -->
-<div class="image">
-<img
-src="old money fashion.jpg"
-class="w-full aspect-[4/4] objet-contain p-3 bg-[#F8F5F0]"
-alt="Elegant outfit"
->
+                <!-- PRODUCT 3 -->
+                <div class="border-2 rounded-lg shadow-2xl oveflow-hidden border-orange-200 bg-[#F5EFE6] ">
+                <div class="w-full aspect-[3/4] overflow-hidden"><img src="Premium Leather Jacket.jpg"
+                        class="w-full h-full rounded-t-lg object-cover" alt="Classic outfit">
+                </div>
+                <div class="h-[20%]">
+                    <h3 class="text-lg mt-4 ml-4">Classic shirt</h3>
+                    <p class="text-sm text-gray-900 mt-4 pl-3">89,000₮</p>
+                    <!-- <button class="absuolute ">Bag</button> -->
+                </div>
+            </div>
 
-<h3 class="text-lg mt-4">classic pants</h3>
-<p class="text-sm flex text-gray-700 mt-4">75,000₮</p>
-</div>
+                <!-- PRODUCT 4 -->
+                <div class="border-2 rounded-lg  shadow-2xl oveflow-hidden border-orange-200 bg-[#F5EFE6] ">
+                <div class="w-full aspect-[3/4] overflow-hidden"><img src="download (6).jpg"
+                        class="w-full h-full rounded-t-lg object-cover" alt="Classic outfit">
+                </div>
+                <div class="h-[20%]">
+                    <h3 class="text-lg mt-4 ml-4">Classic shirt</h3>
+                    <p class="text-sm text-gray-900 mt-4 pl-3">89,000₮</p>
+                    <!-- <button class="absuolute ">Bag</button> -->
+                </div>
+            </div>
+            </div>
 
+    </section>
 
-<!-- PRODUCT 3 -->
-<div class="border-2 rounded-xl  shadow-2xl oveflow-hidden border-orange-200 bg-[#F5EFE6]">
-<img
-src="Men's Clothing _ J_Crew.jpg"
-class="w-full aspect-[3/4] objet-contain p-3 bg-[#F8F5F0]"
-alt="Classic trousers"
->
 
-<h3 class="text-lg mt-4">Tailored Pants</h3>
-<p class="text-sm text-gray-500 mt-1">110,000₮</p>
-</div>
+    <!-- COLLECTIONS -->
+    <section id="collections" class="px-6 md:px-12 py-12">
 
+        <h2 class="text-4xl text-center mb-12">
+            Explore Collections
+        </h2>
 
-<!-- PRODUCT 4 -->
-<div class="border-2 rounded-xl  shadow-2xl oveflow-hidden border-orange-200 bg-[#F5EFE6]">
-<img
-src="Retro Old Money Brown Lambskin Leather Bomber Jacket, Soft Sheepskin Coat Mens, Vintage Aesthetics Minimalist Outerwear, Quiet Luxury Gift.jpg"
-class="w-full aspect-[4/5] object-cover"
-alt="Feminine outfit"
->
+        <div class="grid md:grid-cols-2 gap-6">
 
-<h3 class="text-lg mt-4">Ivory Blouse</h3>
-<p class="text-sm text-gray-500 mt-1">79,000₮</p>
-</div>
+            <div class="relative h-[450px] overflow-hidden">
 
-</div>
+                <img src="Coastal Heritage Elegance.jpeg" class="w-full  object-cover" alt="Old Money collection">
 
-</section>
+                <div class="absolute inset-0 bg-black/20"></div>
 
+                <div class="absolute inset-0 flex flex-col items-center justify-center text-white">
 
-<!-- COLLECTIONS -->
-<section id="collections" class="px-6 md:px-12 py-12">
+                    <h2 class="text-4xl mb-4 ">Summer collection</h2>
 
-<h2 class="text-4xl text-center mb-12">
-Explore Collections
-</h2>
+                    <a href="#shop" class="border border-white px-7 py-3 text-xs tracking-widest hover:bg-slate-950">
+                        DISCOVER
+                    </a>
 
-<div class="grid md:grid-cols-2 gap-6">
+                </div>
 
-<div class="relative h-[450px] overflow-hidden">
+            </div>
 
-<img
-src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=900"
-class="w-full h-full object-cover"
-alt="Old Money collection"
->
 
-<div class="absolute inset-0 bg-black/20"></div>
+            <div class="relative h-[450px] overflow-hidden">
 
-<div class="absolute inset-0 flex flex-col items-center justify-center text-white">
+                <img src="Luxury Winter Fashion for Men with Timeless Elegance.jpeg" class="w-full h-full object-cover"
+                    alt="Soft collection">
 
-<h2 class="text-4xl mb-4">Old Money</h2>
+                <div class="absolute inset-0 bg-black/20"></div>
 
-<a href="#shop" class="border border-white px-7 py-3 text-xs tracking-widest">
-DISCOVER
-</a>
+                <div class="absolute inset-0 flex flex-col items-center justify-center text-white">
 
-</div>
+                    <h2 class="text-4xl mb-4">Winter Collection</h2>
 
-</div>
+                    <a href="#shop" class="border border-white px-7 py-3 text-xs tracking-widest hover:bg-slate-950 ">
+                        DISCOVER
+                    </a>
 
+                </div>
 
-<div class="relative h-[450px] overflow-hidden">
+            </div>
 
-<img
-src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=900"
-class="w-full h-full object-cover"
-alt="Soft collection"
->
+        </div>
 
-<div class="absolute inset-0 bg-black/20"></div>
+    </section>
 
-<div class="absolute inset-0 flex flex-col items-center justify-center text-white">
 
-<h2 class="text-4xl mb-4">Soft Collection</h2>
+    <!-- ABOUT -->
+    <section id="about" class="text-center px-6 py-24 bg-[#E9DED2]">
 
-<a href="#shop" class="border border-white px-7 py-3 text-xs tracking-widest">
-DISCOVER
-</a>
+        <p class="text-xs tracking-[0.3em] mb-5">
+            OUR PHILOSOPHY
+        </p>
 
-</div>
+        <h2 class="text-4xl md:text-5xl mb-6">
+            Beauty in Simplicity.
+        </h2>
 
-</div>
+        <p class="max-w-xl mx-auto text-sm leading-7 text-[#665950]">
+            We believe that true beauty lies in simplicity.
+            Discover timeless pieces designed for women
+            who appreciate elegance, softness and confidence.
+        </p>
 
-</div>
+    </section>
 
-</section>
 
+    <!-- FOOTER -->
+    <footer class="bg-[#403832] text-white px-6 md:px-12 py-12">
 
-<!-- ABOUT -->
-<section id="about" class="text-center px-6 py-24 bg-[#E9DED2]">
+        <div class="text-center">
 
-<p class="text-xs tracking-[0.3em] mb-5">
-OUR PHILOSOPHY
-</p>
+            <h2 class="text-3xl tracking-[0.2em] mb-5">
+                LAVÉLLE
+            </h2>
 
-<h2 class="text-4xl md:text-5xl mb-6">
-Beauty in Simplicity.
-</h2>
+            <p class="text-sm text-gray-300 mb-7">
+                Timeless Style. Feminine Soul.
+            </p>
 
-<p class="max-w-xl mx-auto text-sm leading-7 text-[#665950]">
-We believe that true beauty lies in simplicity.
-Discover timeless pieces designed for women
-who appreciate elegance, softness and confidence.
-</p>
+            <div class="flex justify-center gap-7 text-xs">
+                <a href="#" class="hover:text-slate-950">Instagram</a>
+                <a href="#" class="hover:text-slate-950">Contact</a>
+                <a href="#" class="hover:text-slate-950">Shipping</a>
+            </div>
 
-</section>
+            <p class="text-xs text-gray-400 mt-12">
+                © 2026 LAVÉLLE. All rights reserved.
+            </p>
 
+        </div>
 
-<!-- FOOTER -->
-<footer class="bg-[#403832] text-white px-6 md:px-12 py-12">
-
-<div class="text-center">
-
-<h2 class="text-3xl tracking-[0.2em] mb-5">
-LAVÉLLE
-</h2>
-
-<p class="text-sm text-gray-300 mb-7">
-Timeless Style. Feminine Soul.
-</p>
-
-<div class="flex justify-center gap-7 text-xs">
-<a href="#">Instagram</a>
-<a href="#">Contact</a>
-<a href="#">Shipping</a>
-</div>
-
-<p class="text-xs text-gray-400 mt-12">
-© 2026 LAVÉLLE. All rights reserved.
-</p>
-
-</div>
-
-</footer>
+    </footer>
 
 </body>
-</html>
 
+</html>
