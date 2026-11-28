@@ -11,7 +11,7 @@ public class java_1 {
 		System.out.print("golch ");
 		Double golch = sc.nextDouble();
         System.out.println("========= oyutni kart ===========");
-		System.out.print("ner  :&s" , ner);
+		System.out.printf("ner  :&s" , ner);
 	    System.out.println("========= oyutni kart ===========");
 		System.out.println("========= oyutni kart ===========");
 		
